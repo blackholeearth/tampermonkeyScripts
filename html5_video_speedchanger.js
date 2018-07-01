@@ -142,7 +142,15 @@ function initHtml5PlaybackSpeed() {
 }
 
 
-
+function toggleVis(id) {
+    var div = document.getElementById(id);
+   /* div.style.display = div.style.display == "none" ? "block" : "none";*/
+   div.style.visibility = div.style.visibility == "hidden" ? "visible" : "hidden";
+}
+function toggleDisplay(id , dispVal ="block" ) {
+    var div = document.getElementById(id);
+    div.style.display = div.style.display == "none" ? dispVal : "none";
+}
 
 function rg_scOnChange () {
 	var lblX =document.getElementById("erg_scX_lb_val");
@@ -195,6 +203,21 @@ function Main(){
 	//eDivin.style.bottom = '150px';
 	eDivin.style.left = '0px';
 
+    var eControlWrap = document.createElement('div');
+	eControlWrap.id = 'eControlWrap';
+
+    /*showhide button*/
+    var tglcnt = document.createElement('div');
+	tglcnt.id = 'toggleDisplayCont';
+    tglcnt.style='display:inline; postiton:relative;';
+    var tglbtn = document.createElement('input');
+    tglbtn.id = 'toggleDisplayBtn';
+    tglbtn.style='vertical-align: bottom; width:20px !important; display: inline-block;position: absolute;bottom: 0px;right: -20px;height: 70px;padding: 0px;';
+    tglbtn.value='<';
+    tglbtn.type='button';
+    tglbtn.onclick = function(){ toggleDisplay("eControlWrap") };
+    tglcnt.appendChild(tglbtn);
+
 
 	var ediv_timeout;
 	document.onmousemove = function(){
@@ -209,15 +232,17 @@ function Main(){
 	};
 
 
-	var speedWrap   =  initHtml5PlaybackSpeed();
-	var aspectXWrap =  initHtml5AspectRatioX();
-	var aspectYWrap =  initHtml5AspectRatioY();
+	var speedWrap   = initHtml5PlaybackSpeed();
+	var aspectXWrap = initHtml5AspectRatioX();
+	var aspectYWrap = initHtml5AspectRatioY();
+    eDiv.appendChild(eDivin);
+      eDivin.appendChild(eControlWrap);
+        eControlWrap.appendChild(speedWrap);
+        eControlWrap.appendChild(aspectXWrap);
+        eControlWrap.appendChild(aspectYWrap);
+	  eDivin.appendChild(tglcnt);
 
-	eDivin.appendChild(speedWrap);
-	eDivin.appendChild(aspectXWrap);
-	eDivin.appendChild(aspectYWrap);
-
-	eDiv.appendChild(eDivin);
+	
 
 	var vids = document.getElementsByTagName('video');
 
